@@ -1,7 +1,7 @@
 from airflow.plugins_manager import AirflowPlugin
 from airflow.executors.base_executor import BaseExecutor
 from airflow.utils.state import State
-from slurm_control import get_jobs_status, run_job
+from airflow_slurm_executor.slurm_control import get_jobs_status, run_job
 import logging
 import uuid
 import sys

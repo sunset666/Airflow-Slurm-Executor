@@ -2,10 +2,10 @@ from setuptools import setup, find_packages
 
 setup(
     name="airflow_slurm_executor",
-    version="0.0.1",
-    author="Sunset666 (David Betancur)",
+    version="0.0.2",
+    author="Sunset666",
     author_email="sunset666@sunset666.net",
-    description="Pluging for Airflow to connect to slurm clusters",
+    description="Plugin for Airflow to connect to slurm clusters",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/sunset666/Airflow-Slurm-Executor",
