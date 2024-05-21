@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="airflow_slurm_executor",
-    version="0.0.3",
+    version="0.0.4",
     author="Sunset666",
     author_email="sunset666@sunset666.net",
     description="Plugin for Airflow to connect to slurm clusters",

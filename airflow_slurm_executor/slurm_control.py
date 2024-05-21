@@ -120,8 +120,9 @@ def __execute_srun(args):
 def __compose_run_job_arguments(cmd, queue=None, executor_config=None, job_name=None):
     gpu_config = None
     output_path = None
-    cpu_node = None
+    cpu_nodes = None
     account = None
+    # Checking executor configurations to construct the full command
     if executor_config:
         try:
             gpu_config = executor_config.get("SlurmExecutor").get("gpu_config")
@@ -134,7 +135,10 @@ def __compose_run_job_arguments(cmd, queue=None, executor_config=None, job_name=
         except:
             pass
         try:
-            cpu_node = executor_config.get("SlurmExecutor").get("cpu_nodes")
+            if gpu_config is not None and queue is not None and gpu_config.get("queue") == queue:
+                cpu_nodes = None
+            else:
+                cpu_nodes = executor_config.get("SlurmExecutor").get("cpu_nodes")
         except:
             pass
         try:
@@ -142,13 +146,14 @@ def __compose_run_job_arguments(cmd, queue=None, executor_config=None, job_name=
         except:
             pass
 
+    # Creating argument list based on configs
     args = []
     if queue:
         args += ["--partition", queue]
     if gpu_config:
-        args += ["--gres", gpu_config]
-    if cpu_node:
-        args += ["--nodelist", cpu_node]
+        args += ["--gres", gpu_config.get("gres")]
+    if cpu_nodes:
+        args += ["--nodelist", cpu_nodes]
     if account:
         args += ["--account", account]
     if output_path:
