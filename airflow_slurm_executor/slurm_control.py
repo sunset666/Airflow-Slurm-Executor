@@ -124,7 +124,7 @@ def __compose_run_job_arguments(cmd, queue=None, executor_config=None, job_name=
     account = None
     if executor_config:
         try:
-            gpu_config = executor_config.get("SlurmExecutor").get("gpu_params")
+            gpu_config = executor_config.get("SlurmExecutor").get("gpu_config")
         except:
             pass
         try:
@@ -134,7 +134,7 @@ def __compose_run_job_arguments(cmd, queue=None, executor_config=None, job_name=
         except:
             pass
         try:
-            cpu_node = executor_config.get("SlurmExecutor").get("cpu_node")
+            cpu_node = executor_config.get("SlurmExecutor").get("cpu_nodes")
         except:
             pass
         try:
