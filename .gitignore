@@ -1,1 +1,7 @@
+# IDE
 .idea
+
+# Distribution / Packaging
+build/
+dist/
+*.egg-info/
