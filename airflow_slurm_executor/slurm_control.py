@@ -130,7 +130,7 @@ def __compose_run_job_arguments(cmd, queue=None, executor_config=None, job_name=
             pass
         try:
             output_path = (
-                executor_config.get("SlurmExecutor").get("slurm_output_path") + "slurm-%N-%x-%j.out"
+                executor_config.get("SlurmExecutor").get("slurm_output_path")
             )
         except:
             pass
