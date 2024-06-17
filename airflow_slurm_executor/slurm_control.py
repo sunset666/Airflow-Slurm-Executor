@@ -22,10 +22,10 @@ class SlurmJobStatus:
 
 
 def __execute_on_shell(cmd, args):
-    logger.info(f"Status {cmd}, {args}")
+    logger.debug(f"Status {cmd}, {args}")
     process_status = __run_process([cmd] + args, capture_output=True)
     if process_status.returncode > 0:
-        logger.info(f"Status {process_status}")
+        logger.error(f"Status {process_status}")
         raise SlurmCallError()
     output = process_status.stdout.decode()
     return output
