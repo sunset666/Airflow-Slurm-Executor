@@ -26,7 +26,7 @@ class SlurmExecutor(BaseExecutor):
 
     def execute_async(self, key, command, queue=None, executor_config=None):
         logging.info("execute async called")
-        unique_id = str(key[0]) + str(uuid.uuid1())
+        unique_id = str(key[0]) + "_" + str(uuid.uuid1())
         queue = queue if queue != 'default' else None
         logging.debug('submitting job %s on queue %s', key, queue)
         run_job(cmd=command, queue=queue, task_name=unique_id, executor_config=executor_config)
