@@ -28,15 +28,9 @@ with DAG(
     dag_id="my_dag",
     start_date=pendulum.datetime(2016, 1, 1),
     schedule="@daily",
-    default_args={"executor_config": {"SlurmExecutor: {"attribute": "value"}}},
+    default_args={"executor_config": {"SlurmExecutor: {"attribute": "value"}},
+                  "queue": "QUEUE"},
 ):
 ```
-The attributes implemented so far are:
 
-* **cpu_nodes**: Gives one control on which nodes to run this DAG, used as **nodelist** in slurm.
-* **gpu_config**: Gives one control on which gpu parameters can be used. The current supported schema is: 
-```{'gres': GPU_REQUIRED, 'queue': SPECIAL_GPU_PARTITION}``` If the queue/partition where the DAG task will be 
-executed matches the parameter sent here, **cpu_nodes** will be ignored in favor of the **gres** node selecton.
-* **output_path**: Gives one control over where the slurm output log will be generated, remember the slurm nodes should
-have access to this location.
-* **account**: Gives one control over which account the jobs are going to be linked to.
+The **QUEUE** parameter defined as default argument will be translated as the partition to be used by slurm.

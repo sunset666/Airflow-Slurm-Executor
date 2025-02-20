@@ -118,46 +118,21 @@ def __execute_srun(args):
 
 
 def __compose_run_job_arguments(cmd, queue=None, executor_config=None, job_name=None):
-    gpu_config = None
-    output_path = None
-    cpu_nodes = None
-    account = None
+    slurm_args = []
     # Checking executor configurations to construct the full command
     if executor_config:
         try:
-            gpu_config = executor_config.get("SlurmExecutor").get("gpu_config")
-        except:
-            pass
-        try:
-            output_path = (
-                executor_config.get("SlurmExecutor").get("slurm_output_path")
-            )
-        except:
-            pass
-        try:
-            if gpu_config is not None and queue is not None and gpu_config.get("queue") == queue:
-                cpu_nodes = None
-            else:
-                cpu_nodes = executor_config.get("SlurmExecutor").get("cpu_nodes")
-        except:
-            pass
-        try:
-            account = executor_config.get("SlurmExecutor").get("account")
+            for key, value in executor_config.get("SlurmExecutor").items():
+                slurm_args += ["--" + key, value]
         except:
             pass
 
     # Creating argument list based on configs
     args = []
+    if slurm_args:
+        args += slurm_args
     if queue:
         args += ["--partition", queue]
-    if gpu_config:
-        args += ["--gres", gpu_config.get("gres")]
-    if cpu_nodes:
-        args += ["--nodelist", cpu_nodes]
-    if account:
-        args += ["--account", account]
-    if output_path:
-        args += ["--output", output_path]
     args += ["--job-name", job_name] if job_name else ["--job-name", cmd]
     args += cmd.split(" ") if isinstance(cmd, str) else cmd
     return args
